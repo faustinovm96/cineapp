@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import net.itinajero.app.model.Genero;
 import net.itinajero.app.model.Horario;
 import net.itinajero.app.model.Pelicula;
 import net.itinajero.app.repository.HorariosRepository;
@@ -23,6 +24,9 @@ public class PeliculasServiceJpa implements IPeliculasService {
 
 	@Autowired
 	private HorariosRepository horariosRepo;
+	
+	@Autowired
+	private GenerosServiceJp generosService;
 	
 	@Override
 	public List<Pelicula> buscarActivas() {
@@ -57,16 +61,20 @@ public class PeliculasServiceJpa implements IPeliculasService {
 	@Override
 	public List<String> buscarGeneros() {
 		List<String> generos = new LinkedList<>();
-		generos.add("Accion");
-		generos.add("Aventuras");
-		generos.add("Clásicos");
-		generos.add("Comedia Romantica");
-		generos.add("Drama");
-		generos.add("Terror");
-		generos.add("Infantil");
-		generos.add("Accion y Aventura");
-		generos.add("Ciencia Ficcion");
-		generos.add("Romantica");
+		
+		generosService.buscrTodos()
+		.stream().forEach((genero)->generos.add(genero.getGenero()));
+//		
+//		generos.add("Accion");
+//		generos.add("Aventuras");
+//		generos.add("Clásicos");
+//		generos.add("Comedia Romantica");
+//		generos.add("Drama");
+//		generos.add("Terror");
+//		generos.add("Infantil");
+//		generos.add("Accion y Aventura");
+//		generos.add("Ciencia Ficcion");
+//		generos.add("Romantica");
 
 		return generos;
 	}
